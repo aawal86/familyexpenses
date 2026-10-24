@@ -120,11 +120,11 @@ tbody tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
         <h1>পারিবারিক <span>পরিচালন</span> ব্যয়</h1>
         <div class="snap-grid">
             <div class="snap main-stat">
-                <small><i class="fas fa-calendar-day"></i> <span id="currentMonthLabel">চলতি মাসের খরচ</span></small>
+                <small><i class="fas fa-calendar-day"></i> <span id="currentMonthLabel">নির্বাচিত মাসের খরচ</span></small>
                 <b id="monthlyExpense">৳ ০</b>
             </div>
             <div class="snap">
-                <small><i class="fas fa-chart-pie"></i> <span id="currentYearLabel">চলتی বছরের খরচ</span></small>
+                <small><i class="fas fa-chart-pie"></i> <span id="currentYearLabel">নির্বাচিত বছরের খরচ</span></small>
                 <b id="yearlyExpense">৳ ০</b>
             </div>
         </div>
@@ -364,20 +364,25 @@ function filterAndDisplayData(){
     calculateStats();
 }
 function calculateStats(){
-    const now = new Date();
-    const currentYearStr = now.getFullYear().toString();
-    const currentMonthStr = now.getMonth().toString();
     const monthNames = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
 
-    const yearFiltered = allTransactions.filter(item => item.year === currentYearStr);
+    // ১. নির্দিষ্ট বছরের মোট খরচ
+    const yearFiltered = allTransactions.filter(item => item.year === currentSelectedYear);
     const realYearTotal = yearFiltered.reduce((sum, item) => sum + item.amount, 0);
     
-    const realMonthFiltered = yearFiltered.filter(item => item.month === currentMonthStr);
+    // ২. নির্দিষ্ট মাস (বা সব মাস) এর মোট খরচ
+    const realMonthFiltered = yearFiltered.filter(item => currentSelectedMonth === 'all' || item.month === currentSelectedMonth);
     const realMonthTotal = realMonthFiltered.reduce((sum, item) => sum + item.amount, 0);
 
-    document.getElementById('currentMonthLabel').innerText = `${monthNames[now.getMonth()]} (${currentYearStr}) এর মোট খরচ`;
-    document.getElementById('currentYearLabel').innerText = `${currentYearStr} সালের মোট খরচ`;
+    // লেবেল আপডেট
+    if (currentSelectedMonth === 'all') {
+        document.getElementById('currentMonthLabel').innerText = `${currentSelectedYear} সালের সর্বমোট খরচ`;
+    } else {
+        document.getElementById('currentMonthLabel').innerText = `${monthNames[Number(currentSelectedMonth)]} (${currentSelectedYear}) এর মোট খরচ`;
+    }
+    document.getElementById('currentYearLabel').innerText = `${currentSelectedYear} সালের মোট খরচ`;
 
+    // টাকার পরিমাণ আপডেট
     document.getElementById('monthlyExpense').innerText = '৳ ' + realMonthTotal.toLocaleString('bn-BD');
     document.getElementById('yearlyExpense').innerText = '৳ ' + realYearTotal.toLocaleString('bn-BD');
 }
