@@ -23,6 +23,11 @@ button,input{font-family:inherit}
 .container{position:relative;z-index:1;width:100%;max-width:1400px;margin:0 auto;padding-bottom:80px}
 @media(min-width:900px){body{padding:24px}.container{max-width:1380px}}
 
+/* বিসমিল্লাহ স্টাইল */
+.bismillah-banner{text-align:center;margin-bottom:12px;padding:8px;animation:rise .5s var(--ease) both}
+.bismillah-arabic{font-size:clamp(18px, 3.5vw, 24px);font-weight:700;color:var(--primary);margin-bottom:2px;letter-spacing:1px}
+.bismillah-meaning{font-size:clamp(12px, 2vw, 14px);color:var(--text-muted);font-weight:500}
+
 /* Navbar Styling */
 .navbar{position:sticky;top:10px;z-index:1000;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding:10px 14px 10px 18px;border-radius:99px;border:1px solid var(--border-color);background:color-mix(in srgb,var(--card-bg) 82%,transparent);backdrop-filter:blur(16px) saturate(160%);box-shadow:var(--shadow);animation:rise .6s var(--ease) both}
 .nav-brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:15px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -32,7 +37,7 @@ button,input{font-family:inherit}
 .nav-btn:hover{border-color:var(--accent);transform:translateY(-2px)}
 .nav-btn.icon-only{width:38px;padding:0;justify-content:center;border-radius:50%}
 
-/* আলাদা করা কালারফুল বড় শিরোনাম সেকশন */
+/* কালারফুল বড় শিরোনাম সেকশন */
 .page-title-banner{margin-bottom:16px;text-align:center;padding:12px;animation:rise .65s var(--ease) both}
 .colorful-title{font-size:clamp(22px, 4vw, 36px);font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg, #4f46e5, #06b6d4, #10b981);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
@@ -82,40 +87,47 @@ tbody tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
 .footer{margin:24px 0 10px;padding:24px;text-align:center;border-top:1px dashed var(--border-color);background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border-color)}
 .footer-disclaimer{font-size:12.5px;color:var(--text-muted);line-height:1.7;max-width:800px;margin:0 auto}
 .footer-disclaimer span{color:var(--danger);font-weight:700}
-@media print{body{background:#fff!important;color:#000!important;padding:0!important}.navbar,.filter-card,.section-card:first-child,.footer,.aurora{display:none!important}.container{max-width:100%!important;margin:0!important;padding:0!important}.sections{display:block!important}.section-card{border:none!important;box-shadow:none!important;padding:0!important}table{width:100%!important;border-collapse:collapse!important}th,td{border:1px solid #94a3b8!important;color:#000!important;padding:8px 12px!important}th{background-color:#f1f5f9!important}}
+@media print{body{background:#fff!important;color:#000!important;padding:0!important}.bismillah-banner,.navbar,.filter-card,.section-card:first-child,.footer,.aurora{display:none!important}.container{max-width:100%!important;margin:0!important;padding:0!important}.sections{display:block!important}.section-card{border:none!important;box-shadow:none!important;padding:0!important}table{width:100%!important;border-collapse:collapse!important}th,td{border:1px solid #94a3b8!important;color:#000!important;padding:8px 12px!important}th{background-color:#f1f5f9!important}}
 </style>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i></div>
 <div class="container">
-        <div class="page-title-banner">
-        <h1 class="colorful-title">পারিবারিক পরিচালন ব্যয়</h1>
-    </div>
     
+    <!-- একদম উপরে বিসমিল্লাহ ও বাংলা অর্থ -->
+    <div class="bismillah-banner">
+        <div class="bismillah-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <div class="bismillah-meaning">(পরম করুণাময় ও অসীম দয়ালু আল্লাহর নামে শুরু করছি)</div>
+    </div>
+
     <!-- মেনু বার (Navbar) -->
     <nav class="navbar">
+        <div class="nav-brand"><span class="logo"><i class="fas fa-wallet"></i></span>Operational Expense</div>
         <div class="nav-controls">
             <button class="nav-btn" onclick="resetToHome()" title="হোম"><i class="fas fa-house"></i> হোম</button>
-            <button class="nav-btn" onclick="exportToCSV()" title="ব্যাকআপ ডাউনলোড"><i class="fas fa-file-excel" style="color: #107c41;"></i>📤</button>
-            <button class="nav-btn" onclick="document.getElementById('csvFileInput').click()" title="রিস্টোর"><i class="fas fa-file-import" style="color: var(--primary);"></i>📥</button>
+            <button class="nav-btn" onclick="exportToCSV()" title="ব্যাকআপ ডাউনলোড"><i class="fas fa-file-excel" style="color: #107c41;"></i> ব্যাকআপ</button>
+            <button class="nav-btn" onclick="document.getElementById('csvFileInput').click()" title="রিস্টোর"><i class="fas fa-file-import" style="color: var(--primary);"></i> রিস্টোর</button>
             <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="importFromCSV(event)">
-            <button class="nav-btn" onclick="window.print(   )" title="প্রিন্ট">প্রিন্ট<i class="fas fa-print"></i></button>
-            <button class="nav-btn" onclick="toggleTheme()" title="ডার্ক/লাইট মোড"><i id="themeIcon" class="fas fa-moon"></i></button>
+            <button class="nav-btn icon-only" onclick="window.print()" title="প্রিন্ট"><i class="fas fa-print"></i></button>
+            <button class="nav-btn icon-only" onclick="toggleTheme()" title="ডার্ক/লাইট মোড"><i id="themeIcon" class="fas fa-moon"></i></button>
         </div>
     </nav>
 
-    
+    <!-- বড় ও কালারফুল শিরোনাম -->
+    <div class="page-title-banner">
+        <h1 class="colorful-title">পারিবারিক পরিচালন ব্যয়</h1>
+    </div>
 
     <header class="hero">
-        <span class="kicker"><span class="dot"></span>এক নজরে</span>
-        <h1>পারিবারিক <span>পরিচালন</span> ব্যয়</h1>
+        <span class="kicker"><span class="dot"></span>Operational Overview</span>
+        <h1>Family <span>Operational</span> Expense</h1>
         <div class="snap-grid">
             <div class="snap main-stat">
                 <small><i class="fas fa-calendar-day"></i> <span id="currentMonthLabel">চলতি মাসের খরচ</span></small>
                 <b id="monthlyExpense">৳ ০</b>
             </div>
             <div class="snap">
-                <small><i class="fas fa-chart-pie"></i> <span id="currentYearLabel">চলতি বছরের খরচ</span></small>
+                <small><i class="fas fa-chart-pie"></i> <span id="currentYearLabel">চলتی বছরের খরচ</span></small>
                 <b id="yearlyExpense">৳ ০</b>
             </div>
         </div>
@@ -183,8 +195,7 @@ tbody tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
         </div>
     </div>
     <footer class="footer">
-        <div class="footer-disclaimer">© 2026 <span>পারিবারিক পরিচালন ব্যয়</span></div>
-        <div>এই সিস্টেমটি শুধুমাত্র মাসিক এবং বাৎসরিক পারিবারিক পরিচালন ব্যয়ের হিসাব সংরক্ষণের জন্য সংরক্ষিত।</div>
+        <div class="footer-disclaimer">© 2026 <span>Operational Expense</span> | এই সিস্টেমটি শুধুমাত্র মাসিক এবং বাৎসরিক পারিবারিক পরিচালন ব্যয়ের হিসাব সংরক্ষণের জন্য সংরক্ষিত।</div>
     </footer>
 </div>
 <script>
